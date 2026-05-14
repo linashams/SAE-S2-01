@@ -1,0 +1,358 @@
+/* ── Variables de couleurs ── */
+:root {
+  /* Arrière-plans */
+  --color-bg-page: #FFC2E2;
+  --color-bg-panel: #042553;
+  --color-bg-input: #ffffff;
+  --color-bg-card-front: #042553;
+  --color-bg-card-back: #ffffff;
+
+  /* Bordures */
+  --color-border-input: oklch(0.551 0.023 264.364);
+  --color-border-input-focus: #ffffff;
+  --color-border-card: oklch(0.446 0.037 257.281);
+
+  /* Textes */
+  --color-text-title: #042553;
+  --color-text-heading: #042553;
+  --color-text-label: #ffffff;
+  --color-text-input: #042553;
+  --color-text-white: #ffffff;
+
+  /* Bouton principal (démarrer) */
+  --color-btn-primary: #F0F7FD;
+  --color-btn-primary-hover: #E6F1FA;
+
+  /* Bouton danger (abandonner) */
+  --color-btn-danger: oklch(0.577 0.215 27.325);
+  --color-btn-danger-hover: oklch(0.505 0.19 27.518);
+
+  /* Chronomètre */
+  --color-timer: oklch(0.773 0.153 163.223);
+}
+
+/* ── Reset & base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  background-color: var(--color-bg-page);
+  padding: 1rem;
+  font-family: sans-serif;
+}
+
+/* ── Header ── */
+header h1 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--color-text-title);
+  text-align: center;
+}
+
+/* ── Setup form panel ── */
+.setup-form {
+  margin-top: 1.5rem;
+  padding: 2rem;
+  background-color: var(--color-bg-panel);
+  border-radius: 2rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 60rem;
+}
+
+.setup-form h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--color-text-heading);
+}
+
+/* ── Form ── */
+.game-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-form label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-label);
+  margin-bottom: 0.25rem;
+}
+
+.game-form input,
+.game-form select {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-border-input);
+  border-radius: 30px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: var(--color-text-input);
+  background-color: var(--color-bg-input);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.game-form input:focus,
+.game-form select:focus {
+  border-color: var(--color-border-input-focus);
+  box-shadow: 0 0 0 2px var(--color-border-input);
+}
+
+.game-form button[type="submit"] {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  margin-top: 30px;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-title);
+  background-color: var(--color-btn-primary);
+  cursor: pointer;
+  outline: none;
+}
+
+.game-form button[type="submit"]:hover {
+  background-color: var(--color-btn-primary-hover);
+}
+
+/* ── Game area ── */
+.game-area {
+  width: 100%;
+  max-width: 56rem;
+  margin-top: 2rem;
+}
+
+.game-area-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+}
+
+.game-area-header h2 {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto 25px auto;
+
+  background-color: #042553;
+  color: #FFC2E2;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px 30px;
+  border-radius: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+#abandon {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-btn-danger);
+  color: var(--color-text-white);
+  font-weight: 500;
+  border: none;
+  border-radius: 0.375rem;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  outline: none;
+}
+
+#abandon:hover {
+  background-color: var(--color-btn-danger-hover);
+}
+
+.game-timer {
+  font-size: 1.125rem;
+  font-family: monospace;
+  color: var(--color-timer);
+}
+
+/* ── Game board (CSS Grid) ── */
+.game-board {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+
+}
+
+.game-board.cols-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+/* ── Hidden utility ── */
+.hidden {
+  display: none !important;
+}
+
+/* ── Cards ── */
+.card {
+  perspective: 1000px;
+  width: 8rem;
+  height: 8rem;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+@media (min-width: 768px) {
+  .card {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card.flip .card-inner {
+  transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.card-front {
+  background-color: var(--color-bg-card-front);
+  border: 2px solid var(--color-border-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  background-color: var(--color-bg-card-back);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front img,
+.card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* ── Result Panel ── */
+.result-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: inherit;
+}
+
+.result-box {
+  background: white;
+  padding: 60px 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  min-width: 400px;
+  animation: slideDown 0.4s ease-out;
+}
+
+.result-box h2 {
+  font-size: 2.2rem;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.result-box p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.panel-buttons {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-panel {
+  flex: 1;
+  padding: 15px 25px;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-transform: uppercase;
+}
+
+.btn-restart {
+  background-color: #FFC2E2;
+  color: #042553;
+  box-shadow: 0 4px 15px rgb(4, 37, 83);
+}
+
+.btn-restart:hover {
+  background-color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(79, 70, 229, 0.4);
+}
+
+
+.btn-home {
+  background-color: #FFC2E2;
+  color: #042553;
+  border: 2px solid #e2e8f0;
+}
+
+.btn-home:hover {
+  background-color: #e2e8f0;
+  color: #1e293b;
+  transform: scale(1.05);
+}
+
+.btn-panel:active {
+  transform: scale(0.95);
+}
